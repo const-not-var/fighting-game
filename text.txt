@@ -1,0 +1,5 @@
+// flip atk and move backwards image 
+// add case for attacking backward.
+
+// maybe find a way to flip this? 
+
