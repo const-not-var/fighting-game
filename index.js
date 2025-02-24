@@ -50,20 +50,40 @@ const player = new Fighter({
             imageSrc: './img/samuraiMack/Idle.png',
             framesMax: 8
         },
+        idleBackward: {
+            imageSrc: './img/samuraiMack/Idle backward.png',
+            framesMax: 8
+        },
         run: {
             imageSrc: './img/samuraiMack/Run.png',
+            framesMax: 8
+        },
+        runBackward: {
+            imageSrc: './img/samuraiMack/Run backward.png',
             framesMax: 8
         },
         jump: {
             imageSrc: './img/samuraiMack/Jump.png',
             framesMax: 2
         },
+        jumpBackward: {
+            imageSrc: 'img/samuraiMack/Jump backward.png',
+            framesMax: 2
+        },
         fall: {
             imageSrc: './img/samuraiMack/Fall.png',
             framesMax: 2
         },
+        fallBackward: {
+            imageSrc: './img/samuraiMack/Fall backward.png',
+            framesMax: 2
+        },
         attack1: {
             imageSrc: './img/samuraiMack/Attack1.png',
+            framesMax: 6
+        },
+        attack2: {
+            imageSrc: './img/samuraiMack/Attack2.png',
             framesMax: 6
         },
         takeHit: {
@@ -78,6 +98,14 @@ const player = new Fighter({
     attackBox: {
         offset: {
             x: 100,
+            y: 50
+        },
+        width: 150,
+        height: 50
+    },
+    attackBox2: {
+        offset: {
+            x: -200,
             y: 50
         },
         width: 150,
@@ -110,20 +138,40 @@ const enemy = new Fighter({
             imageSrc: './img/kenji/Idle.png',
             framesMax: 4
         },
+        idleBackward: {
+            imageSrc: './img/kenji/Idle backward.png',
+            framesMax: 4
+        },
         run: {
             imageSrc: './img/kenji/Run.png',
+            framesMax: 8
+        },
+        runBackward: {
+            imageSrc: './img/kenji/Run-backward.png',
             framesMax: 8
         },
         jump: {
             imageSrc: './img/kenji/Jump.png',
             framesMax: 2
         },
+        jumpBackward: {
+            imageSrc: './img/kenji/Jump backward.png',
+            framesMax: 2
+        },
         fall: {
             imageSrc: './img/kenji/Fall.png',
             framesMax: 2
         },
+        fallBackward: {
+            imageSrc: './img/kenji/Fall backward.png',
+            framesMax: 2
+        },
         attack1: {
             imageSrc: './img/kenji/Attack1.png',
+            framesMax: 4
+        },
+        attack2: {
+            imageSrc: './img/kenji/Attack2.png',
             framesMax: 4
         },
         takeHit: {
@@ -141,6 +189,14 @@ const enemy = new Fighter({
             y: 50
         },
         width: 170,
+        height: 50
+    },
+    attackBox2: {
+        offset: {
+            x: 70,
+            y: 50
+        },
+        width: 180,
         height: 50
     }
 });
@@ -182,37 +238,87 @@ function animate() {
     player.velocity.x = 0; // initial player velocity
     enemy.velocity.x = 0;
 
-    //player movement
+    // player movement
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -9;
-        player.switchSprite('run');
+        player.switchSprite('runBackward');
     } else if (keys.d.pressed && player.lastKey === 'd') {
-        player.velocity.x = 9;
         player.switchSprite('run');
-    } else player.switchSprite('idle');
-    
-    // jumping
-    if (player.velocity.y < 0) {
-        player.switchSprite('jump');
-    } else if (player.velocity.y > 0) {
-        player.switchSprite('fall');
+        player.velocity.x = 9;
+    } else if (player.lastKey === 'a') {
+        player.switchSprite('idleBackward');
+    } else {
+        player.switchSprite('idle')
     }
 
-    // enemy movement
+    if (player.velocity.y < 0 && player.lastKey === 'a') {
+        player.switchSprite('jumpBackward');
+    } else if (player.velocity.y < 0 && player.lastKey === 'd') {
+        player.switchSprite('jump');
+    } else if (player.velocity.y > 0 && player.lastKey === 'a') {
+        player.switchSprite('fallBackward');
+    } else if (player.velocity.y > 0) {
+        player.switchSprite('fall')
+    }
+    
+     // og movement code
+    //    if (keys.a.pressed && player.lastKey === 'a') {
+    //     player.scale.x = -1
+    //     player.velocity.x = -9;
+    //     player.switchSprite('run');
+    // } else if (keys.d.pressed && player.lastKey === 'd') {
+    //     player.velocity.x = 9;
+    //     player.switchSprite('run');
+    // } else player.switchSprite('idle');
+    
+
+    // if (player.velocity.y < 0) {
+    //     player.switchSprite('jump');
+    // } else if (player.velocity.y > 0) {
+    //     player.switchSprite('fall');
+    // }
+
+    // jumping backward
+    // if last key is d then jump backward
+
+    // og enemy movement
+    // if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+    //     enemy.velocity.x = -6;
+    //     enemy.switchSprite('run');
+    // } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+    //     enemy.velocity.x = 6;
+    //     enemy.switchSprite('run');
+    // } else {
+    //     enemy.switchSprite('idle');
+    // }
+
+    // if (enemy.velocity.y < 0) {
+    //     enemy.switchSprite('jump');
+    // } else if (enemy.velocity.y > 0) {
+    //     enemy.switchSprite('fall');
+    // }
+
+    //enemy movement
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
-        enemy.velocity.x = -6;
+        enemy.velocity.x = -9;
         enemy.switchSprite('run');
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
-        enemy.velocity.x = 6;
-        enemy.switchSprite('run');
-    } else {
+        enemy.switchSprite('runBackward');
+        enemy.velocity.x = 9;
+    } else if (enemy.lastKey === 'ArrowLeft') {
         enemy.switchSprite('idle');
+    } else {
+        enemy.switchSprite('idleBackward');
     }
 
-    if (enemy.velocity.y < 0) {
+    if (enemy.velocity.y < 0 && enemy.lastKey === 'ArrowLeft') {
         enemy.switchSprite('jump');
-    } else if (enemy.velocity.y > 0) {
+    } else if (enemy.velocity.y < 0 && enemy.lastKey === 'ArrowRight') {
+        enemy.switchSprite('jumpBackward');
+    } else if (enemy.velocity.y > 0 && enemy.lastKey === 'ArrowLeft') {
         enemy.switchSprite('fall');
+    } else if (enemy.velocity.y > 0) {
+        enemy.switchSprite('fallBackward');
     }
 
     // detect for collision & enemy gets hit
@@ -300,7 +406,7 @@ window.addEventListener('keydown', (event) => {
             enemy.velocity.y = -20;
             break
         case 'ArrowDown':
-            enemy.attack();
+            enemy.attackP2();
             break
     }
 }

@@ -4,6 +4,14 @@ function rectangularCollision({  rectangle1, rectangle2  }) {
         rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
         rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
         rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
+        
+        ||
+
+
+        rectangle1.attackBox2.position.x + rectangle1.attackBox2.width >= rectangle2.position.x && 
+        rectangle1.attackBox2.position.x <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.attackBox2.position.y + rectangle1.attackBox2.height >= rectangle2.position.y &&
+        rectangle1.attackBox2.position.y <= rectangle2.position.y + rectangle2.height
     )
 }
 
