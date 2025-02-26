@@ -118,11 +118,11 @@ class Fighter extends Sprite {
         this.attackBox2.position.x = this.position.x + this.attackBox2.offset.x;
         this.attackBox2.position.y = this.position.y + this.attackBox2.offset.y;
 
-        //draw the attack box
-        c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
+        // draw the attack box
+        // c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
 
         // draw attack box 2
-        c.fillRect(this.attackBox2.position.x, this.attackBox2.position.y, this.attackBox2.width, this.attackBox2.height);
+        // c.fillRect(this.attackBox2.position.x, this.attackBox2.position.y, this.attackBox2.width, this.attackBox2.height);
         
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
@@ -136,7 +136,6 @@ class Fighter extends Sprite {
 ;    }
 
     attack() {
-
 
         if (player.lastKey === 'a') {
             this.switchSprite('attack2');

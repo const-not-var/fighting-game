@@ -307,8 +307,10 @@ function animate() {
         enemy.velocity.x = 9;
     } else if (enemy.lastKey === 'ArrowLeft') {
         enemy.switchSprite('idle');
-    } else {
+    } else if (enemy.lastKey === 'ArrowRight'){
         enemy.switchSprite('idleBackward');
+    } else {
+        enemy.switchSprite('idle');
     }
 
     if (enemy.velocity.y < 0 && enemy.lastKey === 'ArrowLeft') {
@@ -317,24 +319,51 @@ function animate() {
         enemy.switchSprite('jumpBackward');
     } else if (enemy.velocity.y > 0 && enemy.lastKey === 'ArrowLeft') {
         enemy.switchSprite('fall');
-    } else if (enemy.velocity.y > 0) {
+    } else if (enemy.velocity.y > 0 && enemy.lastKey === 'ArrowRight') {
         enemy.switchSprite('fallBackward');
+    } else if (enemy.velocity.y > 0) {
+        enemy.switchSprite('fall')
     }
 
     // detect for collision & enemy gets hit
-    if (
-        rectangularCollision({
-            rectangle1: player,
-            rectangle2: enemy
-        }) &&
-        player.isAttacking && player.framesCurrent === 2) {
-            enemy.takeHit();
-            player.isAttacking = false;
+    
+    if (player.lastKey === 'a') {
+        if (
+            backwardRecCollision({
+                rectangle3: player,
+                rectangle4: enemy
+            })  &&
+            player.isAttacking && player.framesCurrent === 2)
             
-            gsap.to('#enemyHealth', {
-                width: enemy.health + '%'
-            })
+            {
+                enemy.takeHit();
+                player.isAttacking = false;
+                
+                gsap.to('#enemyHealth', {
+                    width: enemy.health + '%'
+                })
+        }
+    } else if (player.lastKey === 'd') {
+        if (
+            rectangularCollision({
+                rectangle1: player,
+                rectangle2: enemy
+            })  &&
+            player.isAttacking && player.framesCurrent === 2)
+            
+            {
+                enemy.takeHit();
+                player.isAttacking = false;
+                
+                gsap.to('#enemyHealth', {
+                    width: enemy.health + '%'
+                })
+        }
     }
+
+
+
+
 
     //if player misses
     if (player.isAttacking && player.framesCurrent === 4) {
@@ -343,18 +372,41 @@ function animate() {
 
 
     //where player gets hit
-    if (
-        rectangularCollision({
-            rectangle1: enemy,
-            rectangle2: player
-        }) &&
-        enemy.isAttacking && enemy.framesCurrent === 2) {
-            player.takeHit();
-            enemy.isAttacking = false;
-            gsap.to('#playerHealth', {
-                width: player.health + '%'
-            })
-    }
+
+
+
+    if (enemy.lastKey === 'ArrowLeft') {
+        if (
+            rectangularCollision({
+                rectangle1: enemy,
+                rectangle2: player
+            }) &&
+            enemy.isAttacking && enemy.framesCurrent === 2) {
+                player.takeHit();
+                enemy.isAttacking = false;
+                gsap.to('#playerHealth', {
+                    width: player.health + '%'
+                })
+        }
+    } else if (enemy.lastKey === 'ArrowRight') {
+        if (
+            backwardRecCollision({
+                rectangle3: enemy,
+                rectangle4: player
+            }) &&
+            enemy.isAttacking && enemy.framesCurrent === 2) {
+                player.takeHit();
+                enemy.isAttacking = false;
+                gsap.to('#playerHealth', {
+                    width: player.health + '%'
+                })
+        }
+}
+
+
+
+
+
 
         //if enemy misses
         if (enemy.isAttacking && enemy.framesCurrent === 2) {
