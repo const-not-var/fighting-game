@@ -1,9 +1,21 @@
 function rectangularCollision({  rectangle1, rectangle2  }) {
-    return (
+
+            return (
         rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x && 
         rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
         rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
-        rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
+        rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height 
+    
+    //    
+     )
+}
+
+function backwardRecCollision({ rectangle3, rectangle4 }) {
+    return (
+        rectangle3.attackBox2.position.x + rectangle3.attackBox2.width >= rectangle4.position.x && 
+        rectangle3.attackBox2.position.x <= rectangle4.position.x + rectangle4.width &&
+        rectangle3.attackBox2.position.y + rectangle3.attackBox2.height >= rectangle4.position.y &&
+        rectangle3.attackBox2.position.y <= rectangle4.position.y + rectangle4.height
     )
 }
 

@@ -1,5 +1,8 @@
-// flip atk and move backwards image 
-// add case for attacking backward.
 
-// maybe find a way to flip this? 
 
+Change attack boxes based on position of the x axis (side to side)
+
+• If player position on the x axis is less than the enemies, 
+do regular hit, box.
+• If its more, then switch attack boxes. only detection, 
+not animation!
